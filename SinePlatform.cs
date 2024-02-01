@@ -35,7 +35,7 @@ namespace SinePlatformMod
 			Position += offset;
 			if (HasPlayerRider())
 			{
-				World.Get<Player>().Position += offset;
+				World.Get<Player>().RidingPlatformMoved(offset);
 			}
 		}
 
