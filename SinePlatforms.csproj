@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DLLs\**" />
+    <EmbeddedResource Remove="DLLs\**" />
+    <None Remove="DLLs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Celeste64">
+      <HintPath>..\..\Celeste64.dll</HintPath>
+    </Reference>
+    <Reference Include="Foster.Framework">
+      <HintPath>Foster.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Sledge.Formats">
+      <HintPath>Sledge.Formats.dll</HintPath>
+    </Reference>
+    <Reference Include="Sledge.Formats.Map">
+      <HintPath>Sledge.Formats.Map.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
