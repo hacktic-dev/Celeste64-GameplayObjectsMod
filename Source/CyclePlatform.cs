@@ -32,7 +32,8 @@ namespace PlatformsMod
 		float m_position2RestTime;
 		float m_cycle;
 
-		public float Time { get; set; }
+		public float Time { get => m_time; set => m_time = value; }
+		float m_time;
 
 		public override void Update()
 		{

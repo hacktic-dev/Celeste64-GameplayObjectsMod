@@ -16,7 +16,8 @@ namespace PlatformsMod
 		string m_direction;
 		float m_multiplier = 0.5f;
 
-		public float Time { get; set; }
+		public float Time { get => m_time; set => m_time = value; }
+		float m_time;
 
 		public override void Update()
 		{

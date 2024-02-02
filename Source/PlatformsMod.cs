@@ -8,11 +8,13 @@ namespace PlatformsMod
 	public class PlatformsMod : GameMod
 	{
 		float m_time = 0;
-		List<IGlobalTime> m_globalTimePlatforms = new List<IGlobalTime>();
+		List<IGlobalTime> m_globalTimePlatforms;
 
 		public override void OnModLoaded()
 		{
 			base.OnModLoaded();
+
+			m_globalTimePlatforms = new List<IGlobalTime>();
 
 			Map.ActorFactory sinePlatformFactory = new((map, entity) => new SinePlatform(entity.GetFloatProperty("phase", 0), entity.GetStringProperty("direction", "X"))) { IsSolidGeometry = true };
 			AddActorFactory("SinePlatform", sinePlatformFactory);
@@ -32,13 +34,13 @@ namespace PlatformsMod
 
 		public override void OnMapLoaded(Map map)
 		{
-			m_globalTimePlatforms.Clear();
+			m_time = 0;
 		}
 
 		public override void OnActorAdded(Actor actor)
 		{
 			base.OnActorAdded(actor);
-			if (actor.GetType() == typeof(IGlobalTime))
+			if (actor is IGlobalTime)
 			{
 				m_globalTimePlatforms.Add((IGlobalTime)actor);
 			}
