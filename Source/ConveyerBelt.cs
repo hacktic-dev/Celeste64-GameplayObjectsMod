@@ -30,6 +30,7 @@ namespace PlatformsMod
 					offset = new System.Numerics.Vector3(0, m_speed, 0);
 
 				World.Get<Player>().RidingPlatformMoved(offset);
+				World.Get<Player>().RidingPlatformSetVelocity(offset*100);
 			}
 		}
 

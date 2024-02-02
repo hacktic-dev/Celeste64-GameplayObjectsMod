@@ -68,6 +68,7 @@ namespace PlatformsMod
 			if (HasPlayerRider())
 			{
 				World.Get<Player>().RidingPlatformMoved(offset);
+				World.Get<Player>().RidingPlatformSetVelocity(offset * 100);
 			}
 		}
 
