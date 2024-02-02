@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PlatformsMod
 {
-	internal class CyclePlatform : Solid
+	internal class CyclePlatform : Solid, IGlobalTime
 	{
 
 		internal CyclePlatform(Vector3 secondPositionDelta, float position1MoveTime, float position1RestTime, float position2MoveTime, float position2RestTime)
@@ -32,7 +32,7 @@ namespace PlatformsMod
 		float m_position2RestTime;
 		float m_cycle;
 
-		internal float Time { get; set; }
+		public float Time { get; set; }
 
 		public override void Update()
 		{

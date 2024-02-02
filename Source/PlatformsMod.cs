@@ -8,7 +8,7 @@ namespace PlatformsMod
 	public class PlatformsMod : GameMod
 	{
 		float m_time = 0;
-		List<CyclePlatform> m_platforms = new List<CyclePlatform>();
+		List<IGlobalTime> m_globalTimePlatforms = new List<IGlobalTime>();
 
 		public override void OnModLoaded()
 		{
@@ -32,15 +32,15 @@ namespace PlatformsMod
 
 		public override void OnMapLoaded(Map map)
 		{
-			m_platforms.Clear();
+			m_globalTimePlatforms.Clear();
 		}
 
 		public override void OnActorAdded(Actor actor)
 		{
 			base.OnActorAdded(actor);
-			if (actor.GetType() == typeof(CyclePlatform))
+			if (actor.GetType() == typeof(IGlobalTime))
 			{
-				m_platforms.Add((CyclePlatform)actor);
+				m_globalTimePlatforms.Add((IGlobalTime)actor);
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace PlatformsMod
 
 			m_time += deltaTime;
 
-			foreach(var platform in m_platforms)
+			foreach(var platform in m_globalTimePlatforms)
 			{
 				platform.Time = m_time;
 			}
