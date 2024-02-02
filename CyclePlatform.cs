@@ -32,34 +32,32 @@ namespace PlatformsMod
 		float m_position2RestTime;
 		float m_cycle;
 
-		float m_time;
+		internal float Time { get; set; }
 
 		public override void Update()
 		{
 			base.Update();
 
-			m_time += Foster.Framework.Time.Delta;
-			if (m_time > m_cycle)
-				m_time -= m_cycle;
+			float cycleTime = Time % m_cycle;
 
 			var distance = Vector3.Distance(m_firstPosition, m_secondPosition);
 			var speed = distance / m_position1MoveTime;
 			var offset = new System.Numerics.Vector3(0, 0, 0);
 
-			if(m_time < m_position1RestTime)
+			if(cycleTime < m_position1RestTime)
 			{
 				// do nothing
 			}
-			else if(m_time >m_position1RestTime && m_time < m_position1MoveTime)
+			else if(cycleTime > m_position1RestTime && cycleTime < m_position1MoveTime)
 			{
 				// move from position 1 to position 2
 				offset = speed * Foster.Framework.Time.Delta * (m_secondPosition - m_firstPosition);
 			}
-			else if(m_time > m_position1MoveTime && m_time < m_position2RestTime)
+			else if(cycleTime > m_position1MoveTime && cycleTime < m_position2RestTime)
 			{
 				// do nothing
 			}
-			else if(m_time > m_position2RestTime && m_time < m_position2MoveTime)
+			else if(cycleTime > m_position2RestTime && cycleTime < m_position2MoveTime)
 			{
 				// move from position 2 to position 1
 				offset = speed * Foster.Framework.Time.Delta * (m_firstPosition - m_secondPosition);
