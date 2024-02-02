@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SinePlatforms", "SinePlatforms.csproj", "{AD8A7B21-A452-421B-8504-A9BA3B4804A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platforms", "Platforms.csproj", "{AD8A7B21-A452-421B-8504-A9BA3B4804A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SinePlatformMod
+namespace PlatformsMod
 {
 	internal class SinePlatform : Solid
 	{
