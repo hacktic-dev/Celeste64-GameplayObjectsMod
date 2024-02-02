@@ -17,6 +17,9 @@ namespace PlatformsMod
 			Map.ActorFactory sinePlatformFactory = new((map, entity) => new SinePlatform(entity.GetFloatProperty("phase", 0), entity.GetStringProperty("direction", "X"))) { IsSolidGeometry = true };
 			AddActorFactory("SinePlatform", sinePlatformFactory);
 
+			Map.ActorFactory conveyerBeltFactory = new((map, entity) => new ConveyerBelt(entity.GetStringProperty("direction", "X"), entity.GetFloatProperty("speed", 1))) { IsSolidGeometry = true };
+			AddActorFactory("ConveyerBelt", conveyerBeltFactory);
+
 			Map.ActorFactory cyclePlatformFactory = new((map, entity) =>
 				new CyclePlatform(entity.GetVectorProperty("secondPositionDelta", new System.Numerics.Vector3(0, 0, 0)),
 													entity.GetFloatProperty("position1MoveTime", 1),
