@@ -30,6 +30,9 @@ namespace PlatformsMod
 													entity.GetFloatProperty("position2RestTime", 1)))
 													{ IsSolidGeometry = true };
 			AddActorFactory("CyclePlatform", cyclePlatformFactory);
+
+			Map.ActorFactory rotatingPlatformFactory = new((map, entity) => new RotatingPlatform(entity.GetFloatProperty("speed", 1))) { IsSolidGeometry = true };
+			AddActorFactory("RotatingPlatform", rotatingPlatformFactory);
 		}
 
 		public override void OnMapLoaded(Map map)
