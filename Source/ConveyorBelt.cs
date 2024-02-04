@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace PlatformsMod
 {
-	internal class ConveyerBelt : Solid
+	internal class ConveyorBelt : Solid
 	{
 
-		internal ConveyerBelt(string direction, float speed) { m_speed = speed; m_direction = direction; }
+		internal ConveyorBelt(string direction, float speed) { m_speed = speed; m_direction = direction; }
 
 		float m_speed;
 		string m_direction;
