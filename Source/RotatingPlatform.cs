@@ -41,7 +41,7 @@ namespace PlatformsMod
 			float magnitude1 = currentFacing.Length();
 			float magnitude2 = Facing.Length();
 
-			float angle = (float)Math.Acos(dotProduct / (magnitude1 * magnitude2));
+			float angle = (m_speed > 0 ? 1 : -1) * (float)Math.Acos(dotProduct / (magnitude1 * magnitude2));
 
 			if (HasPlayerRider())
 			{
