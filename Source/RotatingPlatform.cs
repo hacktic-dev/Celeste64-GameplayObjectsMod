@@ -45,11 +45,11 @@ namespace PlatformsMod
 
 			if (HasPlayerRider())
 			{
-				var playerPosZ = World.Get<Player>().Position.Z;
+				var playerPos = World.Get<Player>().Position;
 
 				//now lets move the player.
-				World.Get<Player>().Position = RotatePointByAngle(new Vector3(Position.X, Position.Y, 0), new Vector3(World.Get<Player>().Position.X, World.Get<Player>().Position.Y, 0), angle) + new Vector3(0, 0, playerPosZ);
-
+				World.Get<Player>().Position = RotatePointByAngle(new Vector3(Position.X, Position.Y, 0), new Vector3(World.Get<Player>().Position.X, World.Get<Player>().Position.Y, 0), angle) + new Vector3(0, 0, playerPos.Z);
+				World.Get<Player>().RidingPlatformSetVelocity((World.Get<Player>().Position - playerPos) * 100);
 
 				if (World.Get<Player>().RelativeMoveInput == Vector2.Zero)
 				{
