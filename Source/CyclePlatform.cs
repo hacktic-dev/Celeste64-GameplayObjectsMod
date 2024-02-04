@@ -13,23 +13,31 @@ namespace PlatformsMod
 	internal class CyclePlatform : Solid, IGlobalTime
 	{
 
-		internal CyclePlatform(Vector3 secondPositionDelta, float position1MoveTime, float position1RestTime, float position2MoveTime, float position2RestTime)
+		internal CyclePlatform(Vector3 secondPosition, float position1MoveTime, float position1RestTime, float position2MoveTime, float position2RestTime)
 		{
-			m_firstPosition = Position;
-			m_secondPosition = m_firstPosition + secondPositionDelta;
-			m_position1RestTime = position1RestTime;
-			m_position1MoveTime = position1MoveTime + m_position1RestTime;
-			m_position2RestTime = position2RestTime + m_position1MoveTime;
-			m_position2MoveTime = position2MoveTime + m_position2RestTime;
-			m_cycle = m_position2MoveTime;
+			m_secondPosition = secondPosition;
+			m_position1DepartureTime = position1RestTime;
+			m_position2ArrivalTime = position1MoveTime + m_position1DepartureTime;
+			m_position2DepartureTime = position2RestTime + m_position2ArrivalTime;
+			m_position1ArrivalTime = position2MoveTime + m_position2DepartureTime;
+			m_cycle = m_position1ArrivalTime;
+
+			m_position1MoveTime = position1MoveTime;
+			m_position2MoveTime = position2MoveTime;
 		}
 
 		Vector3 m_firstPosition;
 		Vector3 m_secondPosition;
+		float m_position2ArrivalTime;
+		float m_position1DepartureTime;
+		float m_position1ArrivalTime;
+		float m_position2DepartureTime;
+
 		float m_position1MoveTime;
-		float m_position1RestTime;
 		float m_position2MoveTime;
-		float m_position2RestTime;
+
+		bool m_isFirstPositionSet = false;
+
 		float m_cycle;
 
 		public float Time { get => m_time; set => m_time = value; }
@@ -39,33 +47,41 @@ namespace PlatformsMod
 		{
 			base.Update();
 
+			if(!m_isFirstPositionSet)
+			{
+				m_firstPosition = Position;
+				m_isFirstPositionSet = true;
+			}
+
 			float cycleTime = Time % m_cycle;
 
-			var distance = Vector3.Distance(m_firstPosition, m_secondPosition);
-			var speed = distance / m_position1MoveTime;
-			var offset = new System.Numerics.Vector3(0, 0, 0);
+			var newPos = new Vector3(0, 0, 0);
 
-			if(cycleTime < m_position1RestTime)
+			if(cycleTime < m_position1DepartureTime)
 			{
-				// do nothing
+				newPos = m_firstPosition;
 			}
-			else if(cycleTime > m_position1RestTime && cycleTime < m_position1MoveTime)
+			else if(cycleTime > m_position1DepartureTime && cycleTime < m_position2ArrivalTime)
 			{
+				var totalMovementTime = m_position2ArrivalTime - m_position1DepartureTime;
+				var t = (cycleTime - m_position1DepartureTime) / totalMovementTime;
 				// move from position 1 to position 2
-				offset = speed * Foster.Framework.Time.Delta * (m_secondPosition - m_firstPosition);
+				newPos = Vector3.Lerp(m_firstPosition, m_secondPosition, t);
 			}
-			else if(cycleTime > m_position1MoveTime && cycleTime < m_position2RestTime)
+			else if((cycleTime > m_position2ArrivalTime && cycleTime < m_position2DepartureTime))
 			{
-				// do nothing
+				newPos = m_secondPosition;
 			}
-			else if(cycleTime > m_position2RestTime && cycleTime < m_position2MoveTime)
+			else if(cycleTime > m_position2DepartureTime && cycleTime < m_position1ArrivalTime)
 			{
+				var totalMovementTime = m_position1ArrivalTime - m_position2DepartureTime;
+				var t = (cycleTime - m_position2DepartureTime) / totalMovementTime;
 				// move from position 2 to position 1
-				offset = speed * Foster.Framework.Time.Delta * (m_firstPosition - m_secondPosition);
+				newPos = Vector3.Lerp(m_secondPosition, m_firstPosition, t);
 			}
 
-			Log.Info(offset);
-			Position += offset;
+			var offset = newPos - Position;
+			Position = newPos;
 			if (HasPlayerRider())
 			{
 				World.Get<Player>().RidingPlatformMoved(offset);
